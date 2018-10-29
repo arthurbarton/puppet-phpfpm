@@ -240,12 +240,16 @@ class phpfpm::params {
       $poold_purge = false
       $ensure      = $::kernelversion ? {
         '6.2'      => '7.0.23',
+        '6.4'      => '7.2.10',
         default    => '%7',
       }
 
       # Service configuration defaults
       $package_name                   = 'php'
-      $service_name                   = 'php70_fpm'
+      $service_name                   =  $::kernelversion ? {
+        '6.2'     =>  'php70_fpm',
+        default   =>  'php72_fpm',
+      }
       $config_dir                     = '/etc'
       $config_name                    = 'php-fpm.conf'
       $config_user                    = 'root'
